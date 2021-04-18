@@ -26,7 +26,7 @@ async function requestOrientationPermission() {
 }
 
 window.addEventListener('load', () => {
-    socket = io('http://localhost:8001')
+    socket = io('http://208.167.253.43:8001')
     socket.on('connect', () => {
         console.log('Connected to websocket server')
     })
