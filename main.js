@@ -38,6 +38,7 @@ window.addEventListener('load', () => {
     socket = io('https://ssi.imanidap.nl:8001')
     socket.on('connect', () => {
         console.log('Connected to websocket server')
+        acc.id = socket.id
     })
 
     document.addEventListener('click', (e) => {

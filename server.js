@@ -78,6 +78,8 @@ wsServer.on('connection', (socket) => {
 
     socket.on('REQ_UPDATE_INPUTS', (data) => {
         UIInputs = data
+        console.log(data)
+        
         for(let connection of TCPConnections) {
             connection.OSCManager.send({
                 address: '/web/small',
