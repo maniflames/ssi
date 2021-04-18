@@ -17,11 +17,11 @@ const wsServerConfig = {
 let httpsServer
 let wsServer
 
-const certPath = '/etc/letsencrypt/live/ssi6.imanidap.nl/fullchain.pem'
-const keyPath = '/etc/letsencrypt/live/ssi6.imanidap.nl/privkey.pem'
+const certPath = '/etc/letsencrypt/live/ssi.imanidap.nl/fullchain.pem'
+const keyPath = '/etc/letsencrypt/live/ssi.imanidap.nl/privkey.pem'
 
-const isCertPresent = false //fs.existsSync(certPath)
-const isKeyPresent = false //fs.existsSync(keyPath)
+const isCertPresent = fs.existsSync(certPath)
+const isKeyPresent = fs.existsSync(keyPath)
 
 if(isCertPresent && isKeyPresent) {
     wsServerConfig.cert = fs.readFileSync(certPath)
