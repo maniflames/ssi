@@ -98,15 +98,15 @@ wsServer.on('connection', (socket) => {
 
         for(let connection of TCPConnections) {
             connection.OSCManager.send({
-                address: '/web/small',
+                address: '/average/x',
                 args: [averageX]
             })
             connection.OSCManager.send({
-                address: '/web/medium',
+                address: '/average/y',
                 args: [averageY]
             })
             connection.OSCManager.send({
-                address: '/web/large',
+                address: '/average/z',
                 args: [averageZ]
             })
         }
