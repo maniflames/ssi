@@ -80,18 +80,21 @@ wsServer.on('connection', (socket) => {
     socket.on('REQ_UPDATE_INPUTS', (data) => {
         UIInputs[data.id] = data
 
-        averageX, averageY, averageZ = 0
+        averageX = 0
+	averageY = 0 
+	averageZ = 0
 
         for(let id in UIInputs) {
             const player = UIInputs[id]
-            averageX += player.x
+           
+	    averageX += player.x
             averageY += player.y
             averageZ += player.z
         }
 
-        averageX /= UIInputs.length
-        averageY /= UIInputs.length
-        averageZ /= UIInputs.length
+        averageX /= Object.keys(UIInputs).length
+        averageY /= Object.keys(UIInputs).length
+        averageZ /= Object.keys(UIInputs).length
 
         for(let connection of TCPConnections) {
             connection.OSCManager.send({
