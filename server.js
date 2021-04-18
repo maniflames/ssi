@@ -38,6 +38,7 @@ const server = net.createServer()
 
 let TCPConnections = []
 let UIInputs = {}
+let averageX, averageY, averageZ = 0
 
 server.on('connection', (socket) => {
     console.log('new tcp client connected')
@@ -77,25 +78,39 @@ wsServer.on('connection', (socket) => {
     console.log('new websocket client connected')
 
     socket.on('REQ_UPDATE_INPUTS', (data) => {
-        UIInputs = data
-        console.log(data)
-        
+        UIInputs[data.id] = data
+
+        averageX, averageY, averageZ = 0
+
+        for(let id in UIInputs) {
+            const player = UIInputs[id]
+            averageX += player.x
+            averageY += player.y
+            averageZ += player.z
+        }
+
+        averageX /= UIInputs.length
+        averageY /= UIInputs.length
+        averageZ /= UIInputs.length
+
         for(let connection of TCPConnections) {
             connection.OSCManager.send({
                 address: '/web/small',
-                args: [UIInputs.x]
+                args: [averageX]
             })
             connection.OSCManager.send({
                 address: '/web/medium',
-                args: [UIInputs.y]
+                args: [averageY]
             })
             connection.OSCManager.send({
                 address: '/web/large',
-                args: [UIInputs.z]
+                args: [averageZ]
             })
         }
     })
 })
+
+//TODO: remove ws clients on disconnect
 
 if(httpsServer) {
     httpsServer.listen(WS_PORT, () => {
