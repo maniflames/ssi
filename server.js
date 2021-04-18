@@ -79,20 +79,22 @@ wsServer.on('connection', (socket) => {
     socket.on('REQ_UPDATE_INPUTS', (data) => {
         UIInputs = data
 
-        for(let connection of TCPConnections) {
-            connection.OSCManager.send({
-                address: '/web/small',
-                args: [UIInputs.small.y]
-            })
-            connection.OSCManager.send({
-                address: '/web/medium',
-                args: [UIInputs.medium.y]
-            })
-            connection.OSCManager.send({
-                address: '/web/large',
-                args: [UIInputs.large.y]
-            })
-        }
+        console.log(data)
+
+        // for(let connection of TCPConnections) {
+        //     connection.OSCManager.send({
+        //         address: '/web/small',
+        //         args: [UIInputs.small.y]
+        //     })
+        //     connection.OSCManager.send({
+        //         address: '/web/medium',
+        //         args: [UIInputs.medium.y]
+        //     })
+        //     connection.OSCManager.send({
+        //         address: '/web/large',
+        //         args: [UIInputs.large.y]
+        //     })
+        // }
     })
 })
 

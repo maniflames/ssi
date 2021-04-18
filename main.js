@@ -1,6 +1,6 @@
 import io from 'socket.io/client-dist/socket.io.min.js'
 
-let hasPermission = false
+let isLoopRunning = false
 let acc = {}
 let socket
 
@@ -13,7 +13,11 @@ async function requestOrientationPermission() {
         }
     }
 
-    hasPermission = true 
+    if(!isLoopRunning) {
+        requestAnimationFrame(updateValues)
+        isLoopRunning = true
+    }
+
     window.addEventListener('deviceorientation', (e) => {
         document.querySelector('.x span').textContent = e.beta
         document.querySelector('.y span').textContent = e.gamma
@@ -26,10 +30,6 @@ async function requestOrientationPermission() {
 }
 
 function updateValues() {
-    if(!hasPermission) {
-        return
-    }
-
     socket.emit('REQ_UPDATE_INPUTS', acc)
     requestAnimationFrame(updateValues)
 }
@@ -39,8 +39,6 @@ window.addEventListener('load', () => {
     socket.on('connect', () => {
         console.log('Connected to websocket server')
     })
-
-    requestAnimationFrame(updateValues)
 
     document.addEventListener('click', (e) => {
         const target = e.target
