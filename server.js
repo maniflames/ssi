@@ -120,8 +120,6 @@ wsServer.on('connection', (socket) => {
     })
 })
 
-//TODO: remove ws clients on disconnect
-
 if(httpsServer) {
     httpsServer.listen(WS_PORT, () => {
         console.log(`WS server listening on port ${WS_PORT}`)
