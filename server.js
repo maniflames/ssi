@@ -11,7 +11,9 @@ const wsServerConfig = {
     cors: {
         origin: '*',
         methods: ['GET', 'POST'],
-    }
+    },
+    pingTimeout: 2000,
+    pingInterval: 2500,
 }
 
 let httpsServer
@@ -110,6 +112,11 @@ wsServer.on('connection', (socket) => {
                 args: [averageZ]
             })
         }
+    })
+
+    socket.on('disconnect', () => {
+	console.log('ws client disconnected')
+	delete UIInputs[socket.id]
     })
 })
 
